@@ -1,10 +1,16 @@
 import React from "react";
-import { View, Text } from "react-native";
+import {
+  ListsContainer,
+  TitleContainer,
+  Title,
+} from "../components/list.styles";
 
 export const ListsScreen = ({ navigation }) => {
   return (
-    <View>
-      <Text>Lists Screen</Text>
-    </View>
+    <ListsContainer>
+      <TitleContainer>
+        <Title>Your Lists</Title>
+      </TitleContainer>
+    </ListsContainer>
   );
 };

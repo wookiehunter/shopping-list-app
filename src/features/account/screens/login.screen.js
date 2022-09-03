@@ -3,7 +3,6 @@ import { ActivityIndicator, Colors } from "react-native-paper";
 
 import {
   AccountBackground,
-  AccountCover,
   AccountContainer,
   AuthButton,
   AuthInput,
@@ -20,7 +19,6 @@ export const LoginScreen = ({ navigation }) => {
   const { onLogin, isLoading, error } = useContext(AuthenticationContext);
   return (
     <AccountBackground>
-      <AccountCover />
       <Title>Meals To Go</Title>
       <AccountContainer>
         <AuthInput
