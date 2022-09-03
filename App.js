@@ -1,36 +1,56 @@
-import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
-import styled, { ThemeProvider } from 'styled-components/native';
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar as ExpoStatusBar } from "expo-status-bar";
+import React, { useEffect, useState } from "react";
+import styled, { ThemeProvider } from "styled-components/native";
+import { StyleSheet, Text, View } from "react-native";
 
-import { theme } from './src/infrastructure/theme';
+import { theme } from "./src/infrastructure/theme";
 
-const IntroText = styled(Text)`
-	color: ${(props) => props.theme.colors.brand.primary};
-	font-size: ${(props) => props.theme.fontSizes.h3};
-  text-align: center;
-`;
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 
-export default function App() {
-	return (
-		<>
-			<ThemeProvider theme={theme}>
-				<View style={styles.container}>
-					<IntroText>Never lose your shopping list again...</IntroText>
-				</View>
-			</ThemeProvider>
-			<ExpoStatusBar style='auto' />
-		</>
-	);
+import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
+import { Navigation } from "./src/infrastructure/navigation/index";
+
+import {
+  useFonts as useOswald,
+  Oswald_400Regular,
+} from "@expo-google-fonts/oswald";
+import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBUlQJhTi7v9gG7WOsosIF0jbMrIc3Vc7g",
+  authDomain: "shoppinglist-xenos.firebaseapp.com",
+  projectId: "shoppinglist-xenos",
+  storageBucket: "shoppinglist-xenos.appspot.com",
+  messagingSenderId: "940507744166",
+  appId: "1:940507744166:web:3729f1a426443aca8b3167",
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
 }
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-});
+export default function App() {
+  const [oswaldLoaded] = useOswald({
+    Oswald_400Regular,
+  });
+
+  const [latoLoaded] = useLato({
+    Lato_400Regular,
+  });
+
+  if (!oswaldLoaded || !latoLoaded) {
+    return null;
+  }
+  return (
+    <>
+      <ThemeProvider theme={theme}>
+        <AuthenticationContextProvider>
+          <Navigation />
+        </AuthenticationContextProvider>
+      </ThemeProvider>
+      <ExpoStatusBar style="auto" />
+    </>
+  );
+}
