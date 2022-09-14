@@ -4,12 +4,14 @@ import {
   TitleContainer,
   Title,
 } from "../components/list.styles";
+import { AddNewList } from "../components/newListButton";
 
 export const ListsScreen = ({ navigation }) => {
   return (
     <ListsContainer>
       <TitleContainer>
-        <Title>Your Lists</Title>
+        {/* <Title>Your Lists</Title> */}
+        <AddNewList navigation={navigation} />
       </TitleContainer>
     </ListsContainer>
   );
